@@ -20,8 +20,6 @@ const ImagesScreen = () => {
 
     return (
         <>
-            <Text>ImagesScreen</Text>
-
             {imagesList.length > 0 ? (
                 <FlatList
                     data={imagesList}
