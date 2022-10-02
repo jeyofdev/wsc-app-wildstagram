@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Camera, CameraType } from 'expo-camera';
 import { useEffect, useRef, useState } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import * as ImageManipulator from 'expo-image-manipulator';
 
 const CameraScreen = () => {
     const [type, setType] = useState<CameraType>(CameraType.back);
@@ -64,8 +65,15 @@ const CameraScreen = () => {
                         const pictureMetadata =
                             await cameraRef.current.takePictureAsync();
 
-                        console.log('pressed', cameraRef);
                         console.log('pictureMetadata', pictureMetadata);
+                        console.log(
+                            'resize',
+
+                            await ImageManipulator.manipulateAsync(
+                                pictureMetadata.uri,
+                                [{ resize: { width: 800 } }]
+                            )
+                        );
                     }}
                 />
             </View>
