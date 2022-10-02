@@ -1,10 +1,12 @@
+import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
+import RootNavigation from './navigation/RootNavigation';
 
 export default function App() {
     return (
-        <View style={styles.container}>
-            <Text>Home page</Text>
-        </View>
+        <NavigationContainer>
+            <RootNavigation />
+        </NavigationContainer>
     );
 }
 
