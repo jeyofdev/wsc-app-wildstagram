@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import * as FileSystem from 'expo-file-system';
-import { FlatList, Image, StyleSheet, Text } from 'react-native';
+import singleFileUploader from 'single-file-uploader';
+import Constants from 'expo-constants';
+import { Button, FlatList, Image, StyleSheet, Text } from 'react-native';
 
 const ImagesScreen = () => {
     const [imagesList, setImagesList] = useState<string[]>([]);
@@ -38,6 +40,32 @@ const ImagesScreen = () => {
                                             itemData.item,
                                     }}
                                 />
+
+                                <Button
+                                    title="upload"
+                                    onPress={async () => {
+                                        try {
+                                            await singleFileUploader({
+                                                distantUrl:
+                                                    'https://wildstagram.nausicaa.wilders.dev/upload',
+                                                filename: itemData.item,
+                                                filetype: 'image/jpeg',
+                                                formDataName: 'fileData',
+                                                localUri:
+                                                    FileSystem.cacheDirectory +
+                                                    'ImageManipulator/' +
+                                                    itemData.item,
+                                                token: Constants?.manifest
+                                                    ?.extra?.token,
+                                                expectedStatusCode: '201',
+                                            });
+
+                                            alert('Uploaded');
+                                        } catch (err) {
+                                            alert('Error');
+                                        }
+                                    }}
+                                />
                             </>
                         );
                     }}
@@ -51,6 +79,7 @@ const styles = StyleSheet.create({
     image: {
         resizeMode: 'cover',
         height: 100,
+        marginTop: 16,
         marginBottom: 16,
     },
 });
